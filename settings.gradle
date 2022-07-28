@@ -1,0 +1,5 @@
+rootProject.name = 'google-calendar-clone'
+include 'core'
+include 'api'
+include 'batch'
+
