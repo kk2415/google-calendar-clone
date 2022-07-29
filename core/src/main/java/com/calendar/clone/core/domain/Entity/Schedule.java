@@ -4,12 +4,14 @@ import com.calendar.clone.core.domain.Event;
 import com.calendar.clone.core.domain.Notification;
 import com.calendar.clone.core.domain.ScheduleType;
 import com.calendar.clone.core.domain.Task;
+import com.calendar.clone.core.util.Period;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -22,7 +24,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Table(name = "schedule")
 @Entity
-public class Schedule {
+public class Schedule extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -33,7 +35,6 @@ public class Schedule {
     private String title;
     private String description;
     @Enumerated(EnumType.STRING) private ScheduleType scheduleType;
-    private LocalDateTime createAt;
 
     @ManyToOne @JoinColumn(name = "user_id") private User user;
 
@@ -79,5 +80,13 @@ public class Schedule {
 
     public Event toEvent() {
         return new Event(this);
+    }
+
+    public boolean isOverlapped(LocalDate date) {
+        return Period.of(this.getStartAt(), this.getEndAt()).isOverlapped(date);
+    }
+
+    public boolean isOverlapped(Period period) {
+        return Period.of(this.getStartAt(), this.getEndAt()).isOverlapped(period);
     }
 }

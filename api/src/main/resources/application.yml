@@ -1,9 +1,30 @@
 spring:
+  profiles:
+    default: dev
+  thymeleaf:
+    cache: false
+    prefix: file:api/src/main/resources/templates/
+  web:
+    resources:
+      cache:
+        period: 0
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          socketFactory.class: javax.net.ssl.SSLSocketFactory
+          auth: true
+          starttls:
+            enable: true
   datasource:
     url: jdbc:mysql://localhost:3306/calendal_clone
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: ${datasource.password}
+    password: ${MYSQL_ROOT_PASSWORD}
   jpa:
     open-in-view: false
     show-sql: true
