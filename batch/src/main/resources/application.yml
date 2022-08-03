@@ -1,0 +1,21 @@
+spring:
+  batch:
+    job:
+      names: ${job.name:NONE}
+    jdbc:
+      initialize-schema: never
+  datasource:
+    url: jdbc:mysql://localhost:3306/calendal_clone
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${MYSQL_ROOT_PASSWORD}
+  main:
+    web-application-type: none #임베디드 웹서버를 실행시키지 않는 옵션 - NONE, SERVLET(기본), REACTIVE
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: TRACE
+        transaction: DEBUG
+        batch: DEBUG
